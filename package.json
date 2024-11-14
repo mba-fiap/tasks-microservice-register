@@ -1,0 +1,8 @@
+{
+  "name": "tasks-register",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:lucascordeiroaraujo/tasks-register.git",
+  "author": "Lucas Cordeiro Araujo <lucascordeiroaraujo@gmail.com>",
+  "license": "MIT"
+}
