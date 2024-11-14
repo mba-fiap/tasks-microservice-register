@@ -1,5 +1,5 @@
 {
-  "name": "tasks-register",
+  "name": "tasks-microservice-register",
   "version": "1.0.0",
   "main": "index.js",
   "repository": "git@github.com:lucascordeiroaraujo/tasks-register.git",

@@ -4,9 +4,9 @@ import { verifyJwt } from '@/http/middlewares/verify-jwt';
 
 import { register } from './register';
 
-import { authenticate } from '@/http/controllers/authenticate';
+import { authenticate } from './authenticate';
 
-import { profile } from '@/http/controllers/profile';
+import { profile } from './profile';
 
 import { refresh } from './refresh';
 
