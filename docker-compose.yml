@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  fiap-tasks-register:
+    image: bitnami/postgresql
+    ports:
+      - ${DB_PORT}:5432
+    environment:
+      - POSTGRESQL_USERNAME=${DB_USERNAME}
+      - POSTGRESQL_PASSWORD=${DB_PASSWORD}
+      - POSTGRESQL_DATABASE=${DB_DATABASE}
