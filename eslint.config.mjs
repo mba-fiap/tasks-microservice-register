@@ -8,7 +8,7 @@ export default [
     files: ['**/*.{js,mjs,cjs,ts}'],
     languageOptions: { globals: globals.browser },
     rules: {
-      quotes: ['error', 'single'], // Adiciona a regra de aspas simples
+      quotes: ['error', 'single'],
     },
   },
   pluginJs.configs.recommended,

@@ -1,16 +1,16 @@
-import fastifyJwt from '@fastify/jwt';
+import fastifyJwt from '@fastify/jwt'
 
-import fastifyCookie from '@fastify/cookie';
+import fastifyCookie from '@fastify/cookie'
 
-import fastify from 'fastify';
+import fastify from 'fastify'
 
-import { ZodError } from 'zod';
+import { ZodError } from 'zod'
 
-import { env } from '@/env';
+import { env } from '@/env'
 
-import { appRoutes } from '@/http/controllers/routes';
+import { appRoutes } from '@/http/controllers/routes'
 
-export const app = fastify();
+export const app = fastify()
 
 app.register(fastifyJwt, {
   secret: env.JWT_SECRET,
@@ -21,22 +21,22 @@ app.register(fastifyJwt, {
   sign: {
     expiresIn: '10m',
   },
-});
+})
 
-app.register(fastifyCookie);
+app.register(fastifyCookie)
 
-app.register(appRoutes);
+app.register(appRoutes)
 
 app.setErrorHandler((error, _, reply) => {
   if (error instanceof ZodError) {
     return reply
       .status(400)
-      .send({ message: 'Validation error.', issues: error.format() });
+      .send({ message: 'Validation error.', issues: error.format() })
   }
 
   if (env.NODE_ENV !== 'production') {
-    console.error(error);
+    console.error(error)
   }
 
-  return reply.status(500).send({ message: 'Internal server error.' });
-});
+  return reply.status(500).send({ message: 'Internal server error.' })
+})

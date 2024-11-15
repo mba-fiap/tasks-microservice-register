@@ -1,8 +1,8 @@
-import { prisma } from '@/lib/prisma';
+import { prisma } from '@/lib/prisma'
 
-import { Prisma } from '@prisma/client';
+import { Prisma } from '@prisma/client'
 
-import { UsersRepository } from '@/repositories/users-repository';
+import { UsersRepository } from '@/repositories/users-repository'
 
 export class PrismaUsersRepository implements UsersRepository {
   async findById(id: string) {
@@ -10,9 +10,9 @@ export class PrismaUsersRepository implements UsersRepository {
       where: {
         id,
       },
-    });
+    })
 
-    return user;
+    return user
   }
 
   async findByEmail(email: string) {
@@ -20,16 +20,16 @@ export class PrismaUsersRepository implements UsersRepository {
       where: {
         email,
       },
-    });
+    })
 
-    return user;
+    return user
   }
 
   async create(data: Prisma.UserCreateInput) {
     const user = await prisma.user.create({
       data,
-    });
+    })
 
-    return user;
+    return user
   }
 }

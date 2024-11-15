@@ -1,22 +1,22 @@
-import { FastifyInstance } from 'fastify';
+import { FastifyInstance } from 'fastify'
 
-import { verifyJwt } from '@/http/middlewares/verify-jwt';
+import { verifyJwt } from '@/http/middlewares/verify-jwt'
 
-import { register } from './register';
+import { register } from './register'
 
-import { authenticate } from './authenticate';
+import { authenticate } from './authenticate'
 
-import { profile } from './profile';
+import { profile } from './profile'
 
-import { refresh } from './refresh';
+import { refresh } from './refresh'
 
 export async function appRoutes(app: FastifyInstance) {
-  app.post('/users', register);
+  app.post('/users', register)
 
-  app.post('/sessions', authenticate);
+  app.post('/sessions', authenticate)
 
-  app.patch('/token/refresh', refresh);
+  app.patch('/token/refresh', refresh)
 
   /** Authenticated */
-  app.get('/me', { onRequest: [verifyJwt] }, profile);
+  app.get('/me', { onRequest: [verifyJwt] }, profile)
 }
