@@ -31,7 +31,7 @@ export async function drop(request: FastifyRequest, reply: FastifyReply) {
     const dropUseCase = makeDropUseCase()
 
     await dropUseCase.execute({
-      userId: '',
+      userId: request.user.sub,
     })
   } catch (err) {
     if (err instanceof UserNotFoundError) {

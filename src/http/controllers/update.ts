@@ -56,7 +56,7 @@ export async function update(request: FastifyRequest, reply: FastifyReply) {
       name,
       email,
       password,
-      userId: '',
+      userId: request.user.sub,
     })
   } catch (err) {
     if (err instanceof UserNotFoundError) {
