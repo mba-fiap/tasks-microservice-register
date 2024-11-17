@@ -2,7 +2,7 @@ version: '3'
 
 services:
   database:
-    image: postgres
+    image: bitnami/postgresql
     container_name: tasks-microservice-register-database
     restart: always
     ports:
@@ -11,5 +11,3 @@ services:
       - POSTGRESQL_USERNAME=${DB_USERNAME}
       - POSTGRESQL_PASSWORD=${DB_PASSWORD}
       - POSTGRESQL_DATABASE=${DB_DATABASE}
-    volumes:
-      - pgdata:/data/postgres

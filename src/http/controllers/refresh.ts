@@ -1,5 +1,27 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 
+export const refreshSchema = {
+  tags: ['Users'],
+  security: [
+    {
+      bearerAuth: [],
+    },
+  ],
+  response: {
+    201: {
+      description: 'OK',
+      type: 'null',
+    },
+    401: {
+      description: 'Unauthorized',
+      type: 'object',
+      properties: {
+        message: { type: 'string' },
+      },
+    },
+  },
+}
+
 export async function refresh(request: FastifyRequest, reply: FastifyReply) {
   await request.jwtVerify({ onlyCookie: true })
 

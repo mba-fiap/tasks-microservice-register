@@ -1,14 +1,16 @@
+import fastify from 'fastify'
+
 import fastifyJwt from '@fastify/jwt'
 
 import fastifyCookie from '@fastify/cookie'
-
-import fastify from 'fastify'
 
 import { ZodError } from 'zod'
 
 import { env } from '@/env'
 
 import { appRoutes } from '@/http/controllers/routes'
+
+import { appSwagger } from './swagger'
 
 export const app = fastify()
 
@@ -24,6 +26,8 @@ app.register(fastifyJwt, {
 })
 
 app.register(fastifyCookie)
+
+appSwagger(app)
 
 app.register(appRoutes)
 
