@@ -1,9 +1,11 @@
-import { FastifyReply, FastifyRequest } from 'fastify'
+import { FastifyRequest } from 'fastify'
 
-export async function verifyJwt(request: FastifyRequest, reply: FastifyReply) {
+import { UserNotAllowedError } from '@/use-cases/errors/user-not-allowed'
+
+export async function verifyJwt(request: FastifyRequest) {
   try {
     await request.jwtVerify()
   } catch {
-    return reply.status(401).send({ message: 'Unauthorized.' })
+    throw new UserNotAllowedError()
   }
 }

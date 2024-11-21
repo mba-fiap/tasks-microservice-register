@@ -6,6 +6,8 @@ import { zodToJsonSchema } from 'zod-to-json-schema'
 
 import { makeUpdateUseCase } from '@/use-cases/factories/make-update-use-case'
 
+import { UserNotAllowedError } from '@/use-cases/errors/user-not-allowed'
+
 import { UserNotFoundError } from '@/use-cases/errors/user-not-found-error'
 
 import { UserAlreadyExistsError } from '@/use-cases/errors/user-already-exists-error'
@@ -14,6 +16,12 @@ const updateBodySchema = z.object({
   name: z.string(),
   email: z.string().email(),
   password: z.string().min(6),
+})
+
+const updateContentSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  email: z.string().email(),
 })
 
 export const updateSchema = {
@@ -26,8 +34,19 @@ export const updateSchema = {
   body: zodToJsonSchema(updateBodySchema),
   response: {
     201: {
-      description: 'OK',
-      type: 'null',
+      description: 'User updated successfully',
+      content: {
+        'application/json': {
+          schema: zodToJsonSchema(updateContentSchema),
+        },
+      },
+    },
+    401: {
+      description: new UserNotAllowedError().message,
+      type: 'object',
+      properties: {
+        message: { type: 'string' },
+      },
     },
     404: {
       description: new UserNotFoundError().message,
@@ -52,13 +71,19 @@ export async function update(request: FastifyRequest, reply: FastifyReply) {
   try {
     const updateUseCase = makeUpdateUseCase()
 
-    await updateUseCase.execute({
+    const user = await updateUseCase.execute({
       name,
       email,
       password,
       userId: request.user.sub,
     })
+
+    return reply.status(201).send(user)
   } catch (err) {
+    if (err instanceof UserNotAllowedError) {
+      return reply.status(401).send({ message: err.message })
+    }
+
     if (err instanceof UserNotFoundError) {
       return reply.status(404).send({ message: err.message })
     }
@@ -69,6 +94,4 @@ export async function update(request: FastifyRequest, reply: FastifyReply) {
 
     throw err
   }
-
-  return reply.status(201).send()
 }

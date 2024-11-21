@@ -8,6 +8,8 @@ import { resolve } from 'path'
 
 import { FastifyInstance } from 'fastify'
 
+import { env } from '@/env'
+
 const packageJson = JSON.parse(readFileSync(resolve('./package.json'), 'utf-8'))
 
 export async function appSwagger(app: FastifyInstance) {
@@ -20,7 +22,7 @@ export async function appSwagger(app: FastifyInstance) {
       },
       servers: [
         {
-          url: 'http://localhost:3000',
+          url: `http://localhost:${env.PORT}`,
           description: 'Servidor Local',
         },
       ],

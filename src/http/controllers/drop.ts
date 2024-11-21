@@ -2,6 +2,8 @@ import { FastifyReply, FastifyRequest } from 'fastify'
 
 import { makeDropUseCase } from '@/use-cases/factories/make-drop-use-case'
 
+import { UserNotAllowedError } from '@/use-cases/errors/user-not-allowed'
+
 import { UserNotFoundError } from '@/use-cases/errors/user-not-found-error'
 
 export const dropSchema = {
@@ -13,8 +15,15 @@ export const dropSchema = {
   ],
   response: {
     201: {
-      description: 'OK',
+      description: 'User dropped successfully',
       type: 'null',
+    },
+    401: {
+      description: new UserNotAllowedError().message,
+      type: 'object',
+      properties: {
+        message: { type: 'string' },
+      },
     },
     404: {
       description: new UserNotFoundError().message,
@@ -33,13 +42,17 @@ export async function drop(request: FastifyRequest, reply: FastifyReply) {
     await dropUseCase.execute({
       userId: request.user.sub,
     })
+
+    return reply.status(201).send()
   } catch (err) {
+    if (err instanceof UserNotAllowedError) {
+      return reply.status(401).send({ message: err.message })
+    }
+
     if (err instanceof UserNotFoundError) {
       return reply.status(404).send({ message: err.message })
     }
 
     throw err
   }
-
-  return reply.status(201).send()
 }

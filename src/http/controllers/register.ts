@@ -14,13 +14,23 @@ const registerBodySchema = z.object({
   password: z.string().min(6),
 })
 
+const registerContentSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  email: z.string().email(),
+})
+
 export const registerSchema = {
   tags: ['Users'],
   body: zodToJsonSchema(registerBodySchema),
   response: {
     201: {
-      description: 'OK',
-      type: 'null',
+      description: 'User registered successfully',
+      content: {
+        'application/json': {
+          schema: zodToJsonSchema(registerContentSchema),
+        },
+      },
     },
     409: {
       description: new UserAlreadyExistsError().message,
@@ -38,11 +48,13 @@ export async function register(request: FastifyRequest, reply: FastifyReply) {
   try {
     const registerUseCase = makeRegisterUseCase()
 
-    await registerUseCase.execute({
+    const user = await registerUseCase.execute({
       name,
       email,
       password,
     })
+
+    return reply.status(201).send(user)
   } catch (err) {
     if (err instanceof UserAlreadyExistsError) {
       return reply.status(409).send({ message: err.message })
@@ -50,6 +62,4 @@ export async function register(request: FastifyRequest, reply: FastifyReply) {
 
     throw err
   }
-
-  return reply.status(201).send()
 }

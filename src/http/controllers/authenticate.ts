@@ -13,13 +13,21 @@ const authenticateBodySchema = z.object({
   password: z.string().min(6),
 })
 
+const authenticateContentSchema = z.object({
+  token: z.string(),
+})
+
 export const authenticateSchema = {
   tags: ['Users'],
   body: zodToJsonSchema(authenticateBodySchema),
   response: {
     201: {
-      description: 'OK',
-      type: 'null',
+      description: 'User authenticated successfully',
+      content: {
+        'application/json': {
+          schema: zodToJsonSchema(authenticateContentSchema),
+        },
+      },
     },
     400: {
       description: new InvalidCredentialsError().message,
@@ -82,6 +90,4 @@ export async function authenticate(
 
     throw err
   }
-
-  return reply.status(200).send()
 }
