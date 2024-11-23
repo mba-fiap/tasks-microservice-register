@@ -13,9 +13,9 @@ import { UserNotFoundError } from '@/use-cases/errors/user-not-found-error'
 import { UserAlreadyExistsError } from '@/use-cases/errors/user-already-exists-error'
 
 const updateBodySchema = z.object({
-  name: z.string(),
-  email: z.string().email(),
-  password: z.string().min(6),
+  name: z.string().optional(),
+  email: z.string().email().optional(),
+  password: z.string().min(6).optional(),
 })
 
 const updateContentSchema = z.object({
@@ -33,7 +33,7 @@ export const updateSchema = {
   ],
   body: zodToJsonSchema(updateBodySchema),
   response: {
-    201: {
+    200: {
       description: 'User updated successfully',
       content: {
         'application/json': {
@@ -78,7 +78,7 @@ export async function update(request: FastifyRequest, reply: FastifyReply) {
       userId: request.user.sub,
     })
 
-    return reply.status(201).send(user)
+    return reply.status(200).send(user)
   } catch (err) {
     if (err instanceof UserNotAllowedError) {
       return reply.status(401).send({ message: err.message })

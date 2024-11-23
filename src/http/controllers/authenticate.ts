@@ -48,7 +48,7 @@ export async function authenticate(
   try {
     const authenticateUseCase = makeAuthenticateUseCase()
 
-    const { user } = await authenticateUseCase.execute({
+    const user = await authenticateUseCase.execute({
       email,
       password,
     })
@@ -72,17 +72,9 @@ export async function authenticate(
       }
     )
 
-    return reply
-      .setCookie('refreshToken', refreshToken, {
-        path: '/',
-        secure: true,
-        sameSite: true,
-        httpOnly: true,
-      })
-      .status(200)
-      .send({
-        token,
-      })
+    return reply.status(200).send({
+      token,
+    })
   } catch (err) {
     if (err instanceof InvalidCredentialsError) {
       return reply.status(400).send({ message: err.message })

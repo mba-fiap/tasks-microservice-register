@@ -11,17 +11,13 @@ interface AuthenticateUseCaseRequest {
   password: string
 }
 
-interface AuthenticateUseCaseResponse {
-  user: User
-}
-
 export class AuthenticateUseCase {
   constructor(private usersRepository: UsersRepository) {}
 
   async execute({
     email,
     password,
-  }: AuthenticateUseCaseRequest): Promise<AuthenticateUseCaseResponse> {
+  }: AuthenticateUseCaseRequest): Promise<User> {
     const user = await this.usersRepository.findByEmail(email)
 
     if (!user) {
@@ -34,8 +30,6 @@ export class AuthenticateUseCase {
       throw new InvalidCredentialsError()
     }
 
-    return {
-      user,
-    }
+    return user
   }
 }

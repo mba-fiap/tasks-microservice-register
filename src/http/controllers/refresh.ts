@@ -61,17 +61,9 @@ export async function refresh(request: FastifyRequest, reply: FastifyReply) {
       }
     )
 
-    return reply
-      .setCookie('refreshToken', refreshToken, {
-        path: '/',
-        secure: true,
-        sameSite: true,
-        httpOnly: true,
-      })
-      .status(200)
-      .send({
-        token,
-      })
+    return reply.status(200).send({
+      token,
+    })
   } catch (err) {
     if (err instanceof UserNotAllowedError) {
       return reply.status(401).send({ message: err.message })

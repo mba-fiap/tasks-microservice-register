@@ -44,15 +44,13 @@ export async function profile(request: FastifyRequest, reply: FastifyReply) {
   try {
     const getUserProfile = makeGetUserProfileUseCase()
 
-    const { user } = await getUserProfile.execute({
+    const user = await getUserProfile.execute({
       userId: request.user.sub,
     })
 
     return reply.status(200).send({
-      user: {
-        ...user,
-        password_hash: undefined,
-      },
+      ...user,
+      password_hash: undefined,
     })
   } catch (err) {
     if (err instanceof UserNotAllowedError) {

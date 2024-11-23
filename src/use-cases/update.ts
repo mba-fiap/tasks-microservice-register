@@ -15,10 +15,6 @@ interface UpdateUseCaseRequest {
   userId: string
 }
 
-interface UpdateUseCaseResponse {
-  user: User
-}
-
 export class UpdateUseCase {
   constructor(private usersRepository: UsersRepository) {}
 
@@ -27,7 +23,7 @@ export class UpdateUseCase {
     email,
     password,
     userId,
-  }: UpdateUseCaseRequest): Promise<UpdateUseCaseResponse> {
+  }: UpdateUseCaseRequest): Promise<User> {
     const user = await this.usersRepository.findById(userId)
 
     if (!user) {
@@ -50,8 +46,8 @@ export class UpdateUseCase {
       user.password_hash = await hash(password, 6)
     }
 
-    return {
-      user,
-    }
+    this.usersRepository.save(user)
+
+    return user
   }
 }

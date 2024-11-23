@@ -12,10 +12,6 @@ interface RegisterUseCaseRequest {
   password: string
 }
 
-interface RegisterUseCaseResponse {
-  user: User
-}
-
 export class RegisterUseCase {
   constructor(private usersRepository: UsersRepository) {}
 
@@ -23,7 +19,7 @@ export class RegisterUseCase {
     name,
     email,
     password,
-  }: RegisterUseCaseRequest): Promise<RegisterUseCaseResponse> {
+  }: RegisterUseCaseRequest): Promise<User> {
     const password_hash = await hash(password, 6)
 
     const userWithSameEmail = await this.usersRepository.findByEmail(email)
@@ -38,8 +34,8 @@ export class RegisterUseCase {
       password_hash,
     })
 
-    return {
-      user,
-    }
+    // TEAMS API - POST /teams user.name
+
+    return user
   }
 }
