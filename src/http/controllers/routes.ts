@@ -8,8 +8,6 @@ import { authenticate, authenticateSchema } from './authenticate'
 
 import { profile, profileSchema } from './profile'
 
-import { refresh, refreshSchema } from './refresh'
-
 import { update, updateSchema } from './update'
 
 import { drop, dropSchema } from './drop'
@@ -25,17 +23,10 @@ export async function appRoutes(app: FastifyInstance) {
     schema: authenticateSchema,
   })
 
-  /** Authenticated */
   app.get('/users', {
     onRequest: [verifyJwt],
     handler: profile,
     schema: profileSchema,
-  })
-
-  app.patch('/sessions/refresh', {
-    onRequest: [verifyJwt],
-    handler: refresh,
-    schema: refreshSchema,
   })
 
   app.put('/users', {
