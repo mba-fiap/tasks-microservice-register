@@ -1,14 +1,12 @@
 import { hash, compare } from 'bcryptjs'
-
 import { expect, describe, it, beforeEach } from 'vitest'
-
-import { UpdateUseCase } from './update'
 
 import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository'
 
+import { UserAlreadyExistsError } from '@/use-cases/errors/user-already-exists-error'
 import { UserNotFoundError } from '@/use-cases/errors/user-not-found-error'
 
-import { UserAlreadyExistsError } from '@/use-cases/errors/user-already-exists-error'
+import { UpdateUseCase } from './update'
 
 let usersRepository: InMemoryUsersRepository
 

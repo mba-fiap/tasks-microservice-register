@@ -1,20 +1,15 @@
-import request from 'supertest'
-
-import { hash } from 'bcryptjs'
-
 import { app } from '@/app'
-
+import { hash } from 'bcryptjs'
+import request from 'supertest'
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest'
 
 import { prisma } from '@/lib/prisma'
 
-import { createAndAuthenticateUser } from '@/utils/test/create-and-authenticate-user'
-
-import { UserNotAllowedError } from '@/use-cases/errors/user-not-allowed'
-
 import { UserAlreadyExistsError } from '@/use-cases/errors/user-already-exists-error'
-
+import { UserNotAllowedError } from '@/use-cases/errors/user-not-allowed'
 import { UserNotFoundError } from '@/use-cases/errors/user-not-found-error'
+
+import { createAndAuthenticateUser } from '@/utils/test/create-and-authenticate-user'
 
 describe('Update (e2e)', () => {
   let token: string

@@ -1,14 +1,12 @@
-import request from 'supertest'
-
 import { app } from '@/app'
-
+import request from 'supertest'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 
 import { prisma } from '@/lib/prisma'
 
-import { createAndAuthenticateUser } from '@/utils/test/create-and-authenticate-user'
-
 import { UserNotAllowedError } from '@/use-cases/errors/user-not-allowed'
+
+import { createAndAuthenticateUser } from '@/utils/test/create-and-authenticate-user'
 
 describe('Profile (e2e)', () => {
   let token: string

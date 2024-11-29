@@ -1,11 +1,8 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
-
 import { z } from 'zod'
-
 import { zodToJsonSchema } from 'zod-to-json-schema'
 
 import { UserNotAllowedError } from '@/use-cases/errors/user-not-allowed'
-
 import { makeGetUserProfileUseCase } from '@/use-cases/factories/make-get-user-profile-use-case'
 
 const profileContentSchema = z.object({

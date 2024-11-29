@@ -1,15 +1,11 @@
-import request from 'supertest'
-
-import { hash } from 'bcryptjs'
-
 import { app } from '@/app'
-
+import { hash } from 'bcryptjs'
+import request from 'supertest'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 
 import { prisma } from '@/lib/prisma'
 
 import { InvalidCredentialsError } from '@/use-cases/errors/invalid-credentials-error'
-
 import { ValidationError } from '@/use-cases/errors/validation-error'
 
 describe('Authenticate (e2e)', () => {

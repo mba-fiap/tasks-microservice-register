@@ -1,16 +1,11 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
-
 import { z } from 'zod'
-
 import { zodToJsonSchema } from 'zod-to-json-schema'
 
-import { makeUpdateUseCase } from '@/use-cases/factories/make-update-use-case'
-
-import { UserNotAllowedError } from '@/use-cases/errors/user-not-allowed'
-
-import { UserNotFoundError } from '@/use-cases/errors/user-not-found-error'
-
 import { UserAlreadyExistsError } from '@/use-cases/errors/user-already-exists-error'
+import { UserNotAllowedError } from '@/use-cases/errors/user-not-allowed'
+import { UserNotFoundError } from '@/use-cases/errors/user-not-found-error'
+import { makeUpdateUseCase } from '@/use-cases/factories/make-update-use-case'
 
 const updateBodySchema = z.object({
   name: z.string().optional(),

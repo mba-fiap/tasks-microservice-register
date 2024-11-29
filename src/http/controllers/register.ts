@@ -1,12 +1,9 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
-
 import { z } from 'zod'
-
 import { zodToJsonSchema } from 'zod-to-json-schema'
 
-import { makeRegisterUseCase } from '@/use-cases/factories/make-register-use-case'
-
 import { UserAlreadyExistsError } from '@/use-cases/errors/user-already-exists-error'
+import { makeRegisterUseCase } from '@/use-cases/factories/make-register-use-case'
 
 const registerBodySchema = z.object({
   name: z.string(),

@@ -1,12 +1,10 @@
-import { hash } from 'bcryptjs'
-
 import { User } from '@prisma/client'
+import { hash } from 'bcryptjs'
 
 import { UsersRepository } from '@/repositories/users-repository'
 
-import { UserNotFoundError } from '@/use-cases/errors/user-not-found-error'
-
 import { UserAlreadyExistsError } from '@/use-cases/errors/user-already-exists-error'
+import { UserNotFoundError } from '@/use-cases/errors/user-not-found-error'
 
 interface UpdateUseCaseRequest {
   name?: string

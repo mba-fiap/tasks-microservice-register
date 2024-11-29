@@ -1,12 +1,8 @@
 import swagger from '@fastify/swagger'
-
 import swaggerUi from '@fastify/swagger-ui'
-
-import { readFileSync } from 'fs'
-
-import { resolve } from 'path'
-
 import { FastifyInstance } from 'fastify'
+import { readFileSync } from 'fs'
+import { resolve } from 'path'
 
 import { env } from '@/env'
 

@@ -1,5 +1,4 @@
 import { User, Prisma, Role } from '@prisma/client'
-
 import { randomUUID } from 'node:crypto'
 
 import { UsersRepository } from '@/repositories/users-repository'

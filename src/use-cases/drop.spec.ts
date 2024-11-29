@@ -1,10 +1,10 @@
 import { expect, describe, it, beforeEach } from 'vitest'
 
-import { DropUseCase } from './drop'
-
 import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository'
 
 import { UserNotFoundError } from '@/use-cases/errors/user-not-found-error'
+
+import { DropUseCase } from './drop'
 
 let usersRepository: InMemoryUsersRepository
 

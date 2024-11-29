@@ -1,6 +1,6 @@
-import { prisma } from '@/lib/prisma'
-
 import { User, Prisma } from '@prisma/client'
+
+import { prisma } from '@/lib/prisma'
 
 import { UsersRepository } from '@/repositories/users-repository'
 

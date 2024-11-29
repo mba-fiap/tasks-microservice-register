@@ -1,5 +1,4 @@
 import { app } from '@/app'
-
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest'
 
 import { prisma } from '@/lib/prisma'

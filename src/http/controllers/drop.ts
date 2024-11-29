@@ -1,10 +1,8 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 
-import { makeDropUseCase } from '@/use-cases/factories/make-drop-use-case'
-
 import { UserNotAllowedError } from '@/use-cases/errors/user-not-allowed'
-
 import { UserNotFoundError } from '@/use-cases/errors/user-not-found-error'
+import { makeDropUseCase } from '@/use-cases/factories/make-drop-use-case'
 
 export const dropSchema = {
   tags: ['Users'],
