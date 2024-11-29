@@ -3,11 +3,10 @@ import pluginJs from '@eslint/js'
 import tseslint from 'typescript-eslint'
 import importHelpers from 'eslint-plugin-import-helpers'
 
-/** @type {import('eslint').Linter.FlatConfig[]} */
 export default [
   {
     plugins: {
-      'import-helpers': importHelpers, // Define o plugin como um objeto
+      'import-helpers': importHelpers,
     },
     files: ['**/*.{js,mjs,cjs,ts}'],
     ignores: ['node_modules/**', 'build/**', 'coverage/**'],
