@@ -1,7 +1,11 @@
+import { EXCHANGES, ROUTING_KEYS } from '@/config/events'
 import { User } from '@prisma/client'
 import { hash } from 'bcryptjs'
+import { container } from 'tsyringe'
 
 import { UsersRepository } from '@/repositories/users-repository'
+
+import { IEventsProviderModel } from '@/shared/providers/EventsProvider/IEventsProviderModel'
 
 import { UserAlreadyExistsError } from '@/use-cases/errors/user-already-exists-error'
 
@@ -12,7 +16,12 @@ interface RegisterUseCaseRequest {
 }
 
 export class RegisterUseCase {
-  constructor(private usersRepository: UsersRepository) {}
+  private eventsProvider: IEventsProviderModel
+
+  constructor(private usersRepository: UsersRepository) {
+    this.eventsProvider =
+      container.resolve<IEventsProviderModel>('EventsProvider')
+  }
 
   async execute({
     name,
@@ -34,6 +43,15 @@ export class RegisterUseCase {
     })
 
     // TEAMS API - POST /teams user.name
+
+    this.eventsProvider.publish({
+      exchange: EXCHANGES.USER,
+      routingKey: ROUTING_KEYS.USER.CREATED,
+      data: {
+        ...user,
+        password_hash: undefined,
+      },
+    })
 
     return user
   }

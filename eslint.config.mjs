@@ -1,7 +1,7 @@
-import globals from 'globals'
 import pluginJs from '@eslint/js'
-import tseslint from 'typescript-eslint'
 import importHelpers from 'eslint-plugin-import-helpers'
+import globals from 'globals'
+import tseslint from 'typescript-eslint'
 
 export default [
   {
@@ -12,6 +12,7 @@ export default [
     ignores: ['node_modules/**', 'build/**', 'coverage/**'],
     languageOptions: { globals: globals.browser },
     rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
       quotes: ['error', 'single'],
       'import-helpers/order-imports': [
         'warn',
@@ -24,6 +25,7 @@ export default [
             '/^@/http/',
             '/^@/lib/',
             '/^@/repositories/',
+            '/^@/shared/',
             '/^@/use-cases/',
             '/^@/utils/',
             ['parent', 'sibling', 'index'],

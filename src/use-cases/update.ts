@@ -1,7 +1,11 @@
+import { EXCHANGES, ROUTING_KEYS } from '@/config/events'
 import { User } from '@prisma/client'
 import { hash } from 'bcryptjs'
+import { container } from 'tsyringe'
 
 import { UsersRepository } from '@/repositories/users-repository'
+
+import { IEventsProviderModel } from '@/shared/providers/EventsProvider/IEventsProviderModel'
 
 import { UserAlreadyExistsError } from '@/use-cases/errors/user-already-exists-error'
 import { UserNotFoundError } from '@/use-cases/errors/user-not-found-error'
@@ -14,7 +18,12 @@ interface UpdateUseCaseRequest {
 }
 
 export class UpdateUseCase {
-  constructor(private usersRepository: UsersRepository) {}
+  private eventsProvider: IEventsProviderModel
+
+  constructor(private usersRepository: UsersRepository) {
+    this.eventsProvider =
+      container.resolve<IEventsProviderModel>('EventsProvider')
+  }
 
   async execute({
     name,
@@ -45,6 +54,17 @@ export class UpdateUseCase {
     }
 
     this.usersRepository.save(user)
+
+    if (name || email) {
+      this.eventsProvider.publish({
+        exchange: EXCHANGES.USER,
+        routingKey: ROUTING_KEYS.USER.UPDATED,
+        data: {
+          ...user,
+          password_hash: undefined,
+        },
+      })
+    }
 
     return user
   }

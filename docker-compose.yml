@@ -11,3 +11,13 @@ services:
       - POSTGRESQL_USERNAME=${DB_USERNAME}
       - POSTGRESQL_PASSWORD=${DB_PASSWORD}
       - POSTGRESQL_DATABASE=${DB_DATABASE}
+  redis:
+    image: redis
+    container_name: tasks-microservice-register-redis
+    restart: always
+    ports:
+      - ${REDIS_PORT}:6379
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    volumes:
+      - './data:/data'

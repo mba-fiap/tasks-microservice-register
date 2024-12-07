@@ -12,6 +12,11 @@ const authenticateBodySchema = z.object({
 
 const authenticateContentSchema = z.object({
   token: z.string(),
+  user: z.object({
+    id: z.string(),
+    name: z.string(),
+    email: z.string().email(),
+  }),
 })
 
 export const authenticateSchema = {
@@ -61,6 +66,10 @@ export async function authenticate(
 
     return reply.status(200).send({
       token,
+      user: {
+        ...user,
+        password_hash: undefined,
+      },
     })
   } catch (err) {
     if (err instanceof InvalidCredentialsError) {

@@ -73,7 +73,10 @@ export async function update(request: FastifyRequest, reply: FastifyReply) {
       userId: request.user.sub,
     })
 
-    return reply.status(200).send(user)
+    return reply.status(200).send({
+      ...user,
+      password_hash: undefined,
+    })
   } catch (err) {
     if (err instanceof UserNotAllowedError) {
       return reply.status(401).send({ message: err.message })

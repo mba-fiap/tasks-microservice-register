@@ -1,5 +1,5 @@
 export class UserNotFoundError extends Error {
   constructor() {
-    super('User not found')
+    super('USER_NOT_FOUND')
   }
 }
